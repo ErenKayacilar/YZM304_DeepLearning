@@ -21,10 +21,6 @@ from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 
 
-# ============================================================
-# Reproducibility
-# ============================================================
-
 def set_seed(seed=42):
     random.seed(seed)
     np.random.seed(seed)
@@ -32,9 +28,6 @@ def set_seed(seed=42):
     torch.cuda.manual_seed_all(seed)
 
 
-# ============================================================
-# Dataset
-# ============================================================
 
 CIFAR10_CLASSES = [
     "airplane", "automobile", "bird", "cat", "deer",
@@ -92,9 +85,7 @@ def get_dataloaders(batch_size=64, num_workers=2, fast_mode=False):
     return train_loader, test_loader
 
 
-# ============================================================
 # Model 1: LeNet-like CNN
-# ============================================================
 
 class LeNetLikeCNN(nn.Module):
     """
@@ -129,10 +120,9 @@ class LeNetLikeCNN(nn.Module):
         return x
 
 
-# ============================================================
+
 # Model 2: Improved CNN with BatchNorm + Dropout
 # Same main hyperparameters as Model 1, but improvement layers added.
-# ============================================================
 
 class ImprovedCNN(nn.Module):
     """
@@ -171,9 +161,7 @@ class ImprovedCNN(nn.Module):
         return x
 
 
-# ============================================================
 # Model 3 / Model 5: Ready CNN architecture from torchvision
-# ============================================================
 
 def get_resnet18(num_classes=10, pretrained=False):
     """
@@ -190,9 +178,7 @@ def get_resnet18(num_classes=10, pretrained=False):
     return model
 
 
-# ============================================================
 # Training / Evaluation
-# ============================================================
 
 def train_one_epoch(model, loader, criterion, optimizer, device):
     model.train()
@@ -318,9 +304,7 @@ def train_model(model, train_loader, test_loader, device, epochs, lr, model_name
     }
 
 
-# ============================================================
-# Plots / Reports
-# ============================================================
+
 
 def save_curves(history, model_name, out_dir):
     plt.figure()
@@ -377,9 +361,8 @@ def save_classification_report(y_true, y_pred, model_name, out_dir):
         f.write(report)
 
 
-# ============================================================
+
 # Hybrid Model: CNN Feature Extractor + Classical ML
-# ============================================================
 
 def extract_features(model, loader, device):
     """
@@ -467,9 +450,6 @@ def run_hybrid_model(train_loader, test_loader, device, out_dir, fast_mode=False
     }
 
 
-# ============================================================
-# Main
-# ============================================================
 
 def main():
     parser = argparse.ArgumentParser()
